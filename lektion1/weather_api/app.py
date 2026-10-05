@@ -1,24 +1,53 @@
 import requests
 from flask import Flask, jsonify
 
+# Importerar requests för att kunna skicka förfrågningar till externa API:er
+# Importerar Flask för att skapa API:t och jsonify för att returnera JSON
+
+
+# Skapar Flask-applikationen
 app = Flask(__name__)
 
 
+# Skapar en route där <city> blir staden som användaren skriver i URL:en
 @app.route("/api/weather/<city>")
 def weather(city):
+    # URL till Open-Meteos Geocoding API
     geocoding_url = "https://geocoding-api.open-meteo.com/v1/search"
+
+    # Skickar med stadsnamnet som parameter
     params = {"name": city}
+
+    # Skickar en GET-förfrågan till Geocoding API:t
     response = requests.get(geocoding_url, params=params)
+
+    # Gör om JSON-svaret till Python-data
     data = response.json()
+
+    # Hämtar det första resultatet från listan med städer
     first_result = data["results"][0]
+
+    # Hämtar stadens koordinater
     latitude = first_result["latitude"]
     longitude = first_result["longitude"]
+
+    # URL till Open-Meteos väder-API
     weather_url = "https://api.open-meteo.com/v1/forecast"
+
+    # Skickar med koordinaterna och ber om aktuellt väder
     params = {"latitude": latitude, "longitude": longitude, "current_weather": True}
+
+    # Skickar en GET-förfrågan till väder-API:t
     weather_response = requests.get(weather_url, params=params)
+
+    # Gör om väder-API:ts JSON-svar till Python-data
     weather_data = weather_response.json()
+
+    # Hämtar temperaturen och väderkoden från svaret
     temperature = weather_data["current_weather"]["temperature"]
     condition = weather_data["current_weather"]["weathercode"]
+
+    # Översätter väderkoden till en text som är lättare att förstå
     match condition:
         case 0:
             condition = "Clear sky"
@@ -77,7 +106,10 @@ def weather(city):
         case 99:
             condition = "Thunderstorm with heavy hail"
         case _:
+            # Används om väderkoden inte finns bland fallen ovan
             condition = "Unknown"
+
+    # Returnerar stad, temperatur och väderförhållande som JSON
     return jsonify(
         {"city": city, "temperature": f"{temperature}°C", "condition": condition}
     )
