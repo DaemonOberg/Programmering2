@@ -1,24 +1,39 @@
 from flask import Flask, jsonify, request
 
+# Skapar Flask-applikationen
 app = Flask(__name__)
+
+
+# Skapar en dictionary med användarnas ID och namn
 users = {1: "Daemon", 2: "Emilia"}
 
 
+# Skapar startsidan som förklarar hur användaren använder API:t
 @app.route("/")
 def index():
     return "Write in the URL /api/users/ and then your user id"
 
 
+# Skapar en GET-route som hämtar en användare med hjälp av användarens ID
 @app.route("/api/users/<int:uid>")
 def get_user(uid):
+    # Kontrollerar om användarens ID finns i users
     if uid in users:
+        # Returnerar användarens namn som JSON
         return jsonify({"name": users[uid]})
     else:
+        # Returnerar ett felmeddelande och statuskod 404 om användaren inte finns
         return jsonify({"Error": "User Not Found"}), 404
 
 
+# Skapar en POST-route som används för att lägga till en ny användare
 @app.route("/api/users", methods=["POST"])
 def add_user():
+    # Gör om JSON-datan från requesten till Python-data
     data = request.get_json()
+
+    # Skapar ett nytt användar-ID och sparar användarens namn
     users[len(users) + 1] = data["name"]
+
+    # Returnerar den nya användaren som JSON med statuskod 201 Created
     return jsonify(data), 201
