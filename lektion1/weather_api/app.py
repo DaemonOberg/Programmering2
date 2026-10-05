@@ -9,6 +9,14 @@ from flask import Flask, jsonify
 app = Flask(__name__)
 
 
+# Skapar startsidan som visar hur användaren använder väder-API:t
+@app.route("/")
+def index():
+    return (
+        "Skriv in en stad i URL:en för att få väderdata, t.ex. /api/weather/Stockholm"
+    )
+
+
 # Skapar en route där <city> blir staden som användaren skriver i URL:en
 @app.route("/api/weather/<city>")
 def weather(city):
