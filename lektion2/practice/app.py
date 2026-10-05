@@ -11,8 +11,10 @@ users = {1: "Daemon", 2: "Emilia"}
 # Skapar startsidan som förklarar hur användaren använder API:t
 @app.route("/")
 def index():
-    return "Write in the URL /api/users/ and then your user id"
-
+    return """Write in the URL /api/users/ and then your user id<br>
+If you wanna add a new user write this in a second terminal<br>
+curl.exe -X POST http://127.0.0.1:5000/api/users -H "Content-Type: application/json" -d '{"name":"Steve"}'<br>
+Steve is only an example, you can write whatever you want"""
 
 # Skapar en GET-route som hämtar en användare med hjälp av användarens ID
 @app.route("/api/users/<int:uid>")
