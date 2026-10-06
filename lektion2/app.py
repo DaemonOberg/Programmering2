@@ -13,7 +13,7 @@ users = {1: "Daemon", 2: "Emilia"}
 def index():
     return """Write in the URL /api/users/ and then your user id<br>
 If you wanna add a new user write this in a second terminal<br>
-curl.exe -X POST http://127.0.0.1:5000/api/users -H "Content-Type: application/json" -d '{\"name\":\"Steve\"}'<br>
+curl.exe -X POST http://127.0.0.1:5000/api/users -H "Content-Type: application/json" --data-raw '{\\\"name\\\":\\\"Steve\\\"}'<br>
 Steve is only an example, you can write whatever you want"""
 
 
