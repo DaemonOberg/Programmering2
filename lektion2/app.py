@@ -43,18 +43,28 @@ def add_user():
     return jsonify(data), 201
 
 
+# Skapar en GET-route som hämtar sökord och sidnummer från query-parametrar
 @app.route("/search")
 def search():
+    # Hämtar sökordet från "q", eller en tom sträng om det saknas
     q = request.args.get("q", "")
+
+    # Hämtar sidnumret från "page", använder 1 som standard och gör om värdet till int
     page = request.args.get("page", 1, type=int)
+    
+    # Returnerar sökordet och sidnumret som JSON
     return jsonify({"search_word": q, "page": page})
 
 
+# Hanterar 404-felet när en sida eller route inte hittas
 @app.errorhandler(404)
 def not_found(error):
+    # Visar den egna 404-sidan och returnerar statuskod 404
     return render_template("404.html"), 404
 
 
+# Hanterar 500-felet när ett internt serverfel uppstår
 @app.errorhandler(500)
 def server_error(error):
+    # Returnerar ett felmeddelande som JSON med statuskod 500
     return jsonify({"Error": "Something went wrong!"}), 500
