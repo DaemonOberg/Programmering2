@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, render_template
 
 # Skapar Flask-applikationen
 app = Flask(__name__)
@@ -44,3 +44,20 @@ def add_user():
 
     # Returnerar den nya användaren som JSON med statuskod 201 Created
     return jsonify(data), 201
+
+
+@app.route("/search")
+def search():
+    q = request.args.get("q", "")
+    page = request.args.get("page", 1, type=int)
+    return jsonify({"search_word": q, "page": page})
+
+
+@app.errorhandler(404)
+def inte_hittad(fel):
+    return render_template("404.html"), 404
+
+
+@app.errorhandler(500)
+def serverfel(fel):
+    return jsonify({"fel": "Något gick fel"}), 5
