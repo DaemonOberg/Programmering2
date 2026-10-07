@@ -24,6 +24,9 @@ def get_user(uid):
     if uid in users:
         # Returnerar användarens namn som JSON med statuskod 200 OK
         return jsonify({"name": users[uid]}), 200
+    else:
+        # Returnerar ett felmeddelande och statuskod 404 om användaren inte finns
+        return jsonify({"Error": "User Not Found"}), 404
 
 
 # Skapar en POST-route som används för att lägga till en ny användare
@@ -51,7 +54,7 @@ def search():
 
     # Hämtar sidnumret från "page", använder 1 som standard och gör om värdet till int
     page = request.args.get("page", 1, type=int)
-    
+
     # Returnerar sökordet och sidnumret som JSON
     return jsonify({"search_word": q, "page": page})
 

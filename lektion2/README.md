@@ -56,6 +56,22 @@ Exempel:
 }
 ```
 
+Om användaren inte finns returneras `404 Not Found`.
+
+Exempel:
+
+```text
+http://127.0.0.1:5000/api/users/999
+```
+
+Svar:
+
+```json
+{
+    "Error": "User Not Found"
+}
+```
+
 ## POST
 
 Lägg till en ny användare med PowerShell:
@@ -66,7 +82,23 @@ curl.exe -X POST http://127.0.0.1:5000/api/users -H "Content-Type: application/j
 
 Om användaren skapas returneras `201 Created`.
 
-Om `name` saknas returneras `400 Bad Request`.
+Exempel på svar:
+
+```json
+{
+    "name": "Steve"
+}
+```
+
+Om `name` saknas i JSON-datan returneras `400 Bad Request`.
+
+Exempel:
+
+```json
+{
+    "Error": "Name is required"
+}
+```
 
 ## Query-parametrar
 
@@ -93,11 +125,32 @@ Om `q` saknas används en tom sträng som standard.
 
 Om `page` saknas används `1` som standard.
 
+Exempel:
+
+```text
+http://127.0.0.1:5000/search
+```
+
+Returnerar:
+
+```json
+{
+    "search_word": "",
+    "page": 1
+}
+```
+
 ## Felhantering
 
 ### 404 Not Found
 
-Om användaren försöker gå till en route som inte finns visas en egen `404.html`-sida.
+API:t har en egen error handler för routes som inte finns.
+
+Om användaren försöker gå till en route som inte finns används templaten:
+
+```text
+templates/404.html
+```
 
 Exempel:
 
@@ -105,15 +158,19 @@ Exempel:
 http://127.0.0.1:5000/does-not-exist
 ```
 
-Returnerar statuskod:
+Sidan visar:
 
 ```text
-404 Not Found
+404 Error: User Not Found
 ```
+
+och returnerar statuskoden `404 Not Found`.
 
 ### 500 Internal Server Error
 
-Om ett internt serverfel uppstår returnerar API:t:
+API:t har även en error handler för interna serverfel.
+
+Om ett internt serverfel uppstår returneras:
 
 ```json
 {
@@ -121,8 +178,16 @@ Om ett internt serverfel uppstår returnerar API:t:
 }
 ```
 
-med statuskoden:
+med statuskoden `500 Internal Server Error`.
+
+## Projektstruktur
 
 ```text
-500 Internal Server Error
+lektion2/
+│
+├── templates/
+│   └── 404.html
+│
+├── app.py
+└── README.md
 ```
