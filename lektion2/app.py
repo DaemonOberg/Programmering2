@@ -54,10 +54,10 @@ def search():
 
 
 @app.errorhandler(404)
-def inte_hittad(fel):
+def not_found(error):
     return render_template("404.html"), 404
 
 
 @app.errorhandler(500)
-def serverfel(fel):
-    return jsonify({"fel": "Något gick fel"}), 5
+def server_error(error):
+    return jsonify({"Error": "Something went wrong!"}), 500
