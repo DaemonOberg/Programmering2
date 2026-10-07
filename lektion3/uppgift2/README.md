@@ -1,4 +1,4 @@
-# Lektion 3 - Uppgift 2
+# Uppgift 2 - Pandas och Plotly
 
 I den här uppgiften skapade jag en Flask-sida som visar en tabell med hjälp av Pandas och ett stapeldiagram med hjälp av Plotly.
 
