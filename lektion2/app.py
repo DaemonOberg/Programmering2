@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, request, render_template
+from flask import Flask, jsonify, render_template, request
 
 # Skapar Flask-applikationen
 app = Flask(__name__)
@@ -24,9 +24,6 @@ def get_user(uid):
     if uid in users:
         # Returnerar användarens namn som JSON med statuskod 200 OK
         return jsonify({"name": users[uid]}), 200
-    else:
-        # Returnerar ett felmeddelande och statuskod 404 om användaren inte finns
-        return jsonify({"Error": "User Not Found"}), 404
 
 
 # Skapar en POST-route som används för att lägga till en ny användare
