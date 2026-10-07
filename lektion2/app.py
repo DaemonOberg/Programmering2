@@ -45,11 +45,13 @@ def add_user():
     # Returnerar den nya användaren som JSON med statuskod 201 Created
     return jsonify(data), 201
 
+
 @app.route("/search")
 def search():
     q = request.args.get("q", "")
     page = request.args.get("page", 1, type=int)
     return jsonify({"search_word": q, "page": page})
+
 
 @app.errorhandler(404)
 def inte_hittad(fel):
