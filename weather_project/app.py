@@ -22,7 +22,7 @@ def index():
     result = None
 
     # Hämtar vädret endast om användaren har angett en stad
-    if city and city.isalpha:
+    if city and city.isalpha():
         result = get_weather(city)
 
     # Skickar stadens namn och väderinformationen till HTML-sidan
