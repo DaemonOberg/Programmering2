@@ -1,26 +1,36 @@
+# requests används för att skicka HTTP-förfrågningar till externa API:er
 import requests
+
+# Flask skapar webbapplikationen
+# jsonify omvandlar Python-data till JSON-svar
+# render_template visar HTML-filer med Jinja2
+# request hämtar information från användarens HTTP-förfrågan
 from flask import Flask, jsonify, render_template, request
-
-# Importerar requests för att kunna skicka förfrågningar till externa API:er
-# Importerar Flask för att skapa API:t och jsonify för att returnera JSON
-
 
 # Skapar Flask-applikationen
 app = Flask(__name__)
 
 
+# Skapar startsidan för väderappen
 @app.route("/")
 def index():
 
+    # Hämtar stadens namn från sökfältet via URL:en
     city = request.args.get("city")
+
+    # Börjar utan någon väderinformation
     resultat = None
 
+    # Hämtar vädret endast om användaren har angett en stad
     if city:
         resultat = get_weather(city)
 
+    # Skickar stadens namn och väderinformationen till HTML-sidan
     return render_template("index.html", city=city, resultat=resultat)
 
 
+# Hämtar väderinformation för en stad från Open-Meteo
+# Returnerar stad, temperatur och väderförhållande som en dictionary
 def get_weather(city):
     # URL till Open-Meteos Geocoding API
     geocoding_url = "https://geocoding-api.open-meteo.com/v1/search"
@@ -122,7 +132,12 @@ def get_weather(city):
     return {"city": city, "temperature": f"{temperature}°C", "condition": condition}
 
 
+# Skapar en API-route där användaren kan ange en stad i URL:en
 @app.route("/api/weather/<city>")
 def weather(city):
+
+    # Anropar get_weather() och sparar väderinformationen
     data = get_weather(city)
+
+    # Omvandlar väderinformationen till JSON och skickar tillbaka den
     return jsonify(data)
