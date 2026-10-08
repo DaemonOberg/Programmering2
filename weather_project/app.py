@@ -22,7 +22,7 @@ def index():
     result = None
 
     # Hämtar vädret endast om användaren har angett en stad
-    if city:
+    if city and city.isalpha:
         result = get_weather(city)
 
     # Skickar stadens namn och väderinformationen till HTML-sidan
@@ -44,12 +44,19 @@ def get_weather(city):
     # Gör om JSON-svaret till Python-data
     data = response.json()
 
-    # Hämtar det första resultatet från listan med städer
-    first_result = data["results"][0]
+    if "results" in data:
+        first_result = data["results"][0]
 
-    # Hämtar stadens koordinater
-    latitude = first_result["latitude"]
-    longitude = first_result["longitude"]
+        # Kontrollerar att stadens namn matchar sökningen
+        if first_result["name"].casefold() != city.casefold():
+            return None
+
+        # Hämtar stadens koordinater
+        latitude = first_result["latitude"]
+        longitude = first_result["longitude"]
+
+    else:
+        return None
 
     # URL till Open-Meteos väder-API
     weather_url = "https://api.open-meteo.com/v1/forecast"

@@ -13,11 +13,11 @@
         flex-direction: column;
         background-color: #152C49;
         color: white;
+}
     input {
     font-size: 20px;
     padding: 12px;
     width: 300px;
-}
 }
     .weather-info {
     display: flex;
@@ -34,12 +34,15 @@
     <input type="text" name="city" placeholder="Enter a city..." required>
     </form>
 <div class="weather-info">
-    {% if city %}
+    {% if result %}
         <p>{{ city }}</p>
     {% endif %}
     {% if result %}
         <p>{{ result.temperature }}</p>
         <p>{{ result.condition }}</p>
+    {% endif %}
+    {% if city and not result %}
+        <p>City not found</p>
     {% endif %}
 </div>
 </body>
