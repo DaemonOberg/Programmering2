@@ -19,14 +19,14 @@ def index():
     city = request.args.get("city")
 
     # Börjar utan någon väderinformation
-    resultat = None
+    result = None
 
     # Hämtar vädret endast om användaren har angett en stad
     if city:
-        resultat = get_weather(city)
+        result = get_weather(city)
 
     # Skickar stadens namn och väderinformationen till HTML-sidan
-    return render_template("index.html", city=city, resultat=resultat)
+    return render_template("index.html", city=city, result=result)
 
 
 # Hämtar väderinformation för en stad från Open-Meteo
