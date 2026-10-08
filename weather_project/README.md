@@ -220,11 +220,7 @@ weather_url = "https://api.open-meteo.com/v1/forecast"
 Sedan skickar jag med koordinaterna och ber om aktuellt väder:
 
 ```python
-params = {
-    "latitude": latitude,
-    "longitude": longitude,
-    "current_weather": True
-}
+params = {"latitude": latitude, "longitude": longitude, "current_weather": True}
 ```
 
 Jag skickar en ny GET-förfrågan:
@@ -289,11 +285,7 @@ Jag lade även till fler väderkoder för exempelvis regn, snö, dimma och åska
 När väderinformationen har hämtats skickar funktionen tillbaka en dictionary:
 
 ```python
-return {
-    "city": city,
-    "temperature": f"{temperature}°C",
-    "condition": condition
-}
+return {"city": city, "temperature": f"{temperature}°C", "condition": condition}
 ```
 
 Dictionaryn innehåller tre nycklar:
