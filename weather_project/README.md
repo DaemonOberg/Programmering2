@@ -23,7 +23,7 @@ weather_project/
 Jag importerade Flask och de funktioner som behövs:
 
 ```python
-from flask import Flask, jsonify, render_template, request
+from flask import Flask, render_template, request
 ```
 
 Sedan skapade jag Flask-applikationen:
@@ -53,14 +53,20 @@ result = None
 
 Det betyder att det inte finns någon väderinformation innan användaren har sökt efter en stad.
 
-Sedan kontrollerar programmet att användaren har skrivit ett stadsnamn som bara innehåller bokstäver:
+Sedan kontrollerar programmet att användaren har skrivit ett stadsnamn som bara innehåller bokstäver och mellanslag:
 
 ```python
-if city and city.isalpha():
+if city and city.replace(" ", "").isalpha():
     result = get_weather(city)
 ```
 
-`isalpha()` kontrollerar om strängen bara innehåller bokstäver.
+`replace(" ", "")` tar bort mellanslagen från strängen som kontrolleras.
+
+`isalpha()` kontrollerar sedan om den återstående strängen bara innehåller bokstäver.
+
+Det gör att användaren exempelvis kan söka efter både `Stockholm` och `New York`.
+
+Det ursprungliga stadsnamnet ändras inte eftersom `replace()` skapar en ny sträng.
 
 Om kontrollen godkänns anropas funktionen `get_weather(city)` som hämtar väderinformationen.
 
@@ -285,14 +291,15 @@ Jag lade även till fler väderkoder för exempelvis regn, snö, dimma och åska
 När väderinformationen har hämtats skickar funktionen tillbaka en dictionary:
 
 ```python
-return {"city": city, "temperature": f"{temperature}°C", "condition": condition}
+return {"temperature": f"{temperature}°C", "condition": condition}
 ```
 
-Dictionaryn innehåller tre nycklar:
+Dictionaryn innehåller två nycklar:
 
-- `city` innehåller stadsnamnet.
 - `temperature` innehåller temperaturen i Celsius.
 - `condition` innehåller väderförhållandet.
+
+Stadsnamnet behöver inte finnas med i dictionaryn eftersom det redan skickas separat till HTML-sidan med `render_template()`.
 
 Jag använde även en f-string:
 
@@ -398,41 +405,6 @@ För att visa väderinformationen bredvid varandra använde jag:
 
 `gap: 20px` skapar mellanrum mellan elementen.
 
-## JSON och egen API-route
-
-Jag skapade även en egen API-route som returnerar väderinformationen som JSON:
-
-```python
-@app.route("/api/weather/<city>")
-def weather(city):
-    data = get_weather(city)
-    return jsonify(data)
-```
-
-`<city>` gör att stadsnamnet kan anges direkt i URL:en.
-
-`get_weather(city)` hämtar väderinformationen.
-
-`jsonify(data)` gör om resultatet till ett JSON-svar.
-
-Exempel på URL:
-
-```text
-http://127.0.0.1:5000/api/weather/Stockholm
-```
-
-Ett exempel på JSON-svaret:
-
-```json
-{
-    "city": "Stockholm",
-    "temperature": "13.9°C",
-    "condition": "Overcast"
-}
-```
-
-Temperaturen och väderförhållandet ändras beroende på det aktuella vädret.
-
 ## Starta programmet
 
 Från mappen `Programmering2` kan programmet startas med:
@@ -464,5 +436,3 @@ Webbsidan visar:
 - Felmeddelandet "City not found" om sökningen inte ger ett giltigt resultat.
 - En mörkblå bakgrund med vit text.
 - Väderinformationen placerad bredvid varandra med hjälp av Flexbox.
-
-Jag skapade även en API-route som gör det möjligt att hämta väderinformationen som JSON.

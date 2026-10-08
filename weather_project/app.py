@@ -2,10 +2,9 @@
 import requests
 
 # Flask skapar webbapplikationen
-# jsonify omvandlar Python-data till JSON-svar
 # render_template visar HTML-filer med Jinja2
 # request hämtar information från användarens HTTP-förfrågan
-from flask import Flask, jsonify, render_template, request
+from flask import Flask, render_template, request
 
 # Skapar Flask-applikationen
 app = Flask(__name__)
@@ -21,8 +20,8 @@ def index():
     # Börjar utan någon väderinformation
     result = None
 
-    # Hämtar vädret endast om användaren har angett en stad
-    if city and city.isalpha():
+    # Hämtar vädret om stadsnamnet endast innehåller bokstäver och mellanslag
+    if city and city.replace(" ", "").isalpha():
         result = get_weather(city)
 
     # Skickar stadens namn och väderinformationen till HTML-sidan
@@ -136,15 +135,4 @@ def get_weather(city):
             # Används om väderkoden inte finns bland fallen ovan
             condition = "Unknown"
 
-    return {"city": city, "temperature": f"{temperature}°C", "condition": condition}
-
-
-# Skapar en API-route där användaren kan ange en stad i URL:en
-@app.route("/api/weather/<city>")
-def weather(city):
-
-    # Anropar get_weather() och sparar väderinformationen
-    data = get_weather(city)
-
-    # Omvandlar väderinformationen till JSON och skickar tillbaka den
-    return jsonify(data)
+    return {"temperature": f"{temperature}°C", "condition": condition}
