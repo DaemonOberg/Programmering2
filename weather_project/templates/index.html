@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Weather App</title>
+    <style>
+    body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 30px;
+        min-height: 100vh;
+        flex-direction: column;
+        background-color: #152C49;
+        color: white;
+    input {
+    font-size: 20px;
+    padding: 12px;
+    width: 300px;
+}
+}
+    .weather-info {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    align-items: center;
+    font-size: 25px;
+}
+</style>
+</head>
+<body>
+    <h1>Weather App</h1>
+    <form method="GET">
+    <input type="text" name="city" placeholder="Enter a city..." required>
+    </form>
+<div class="weather-info">
+    {% if city %}
+        <p>{{ city }}</p>
+    {% endif %}
+    {% if resultat %}
+        <p>{{ resultat.temperature }}</p>
+        <p>{{ resultat.condition }}</p>
+    {% endif %}
+</div>
+</body>
+</html>
