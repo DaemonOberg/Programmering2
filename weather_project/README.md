@@ -1,7 +1,7 @@
 
 # Weather App - Flask och Open-Meteo
 
-I den här uppgiften skapade jag en väderapp med hjälp av Flask, HTML och CSS.
+I den här uppgiften utgick jag från min tidigare `weather_api`, som jag skapade under lektion 1, och vidareutvecklade den till en väderapp med hjälp av Flask, HTML och CSS.
 
 Jag använde Open-Meteo API för att hämta väderinformation om olika städer, bland annat temperatur och väderförhållanden.
 
