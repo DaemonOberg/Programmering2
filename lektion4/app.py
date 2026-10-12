@@ -1,3 +1,11 @@
-from flask import Flask
+import requests
+
+from flask import Flask, render_template, request
+
 
 app = Flask(__name__)
+
+@app.route("/")
+def index():
+    return render_template("base.html")
+  

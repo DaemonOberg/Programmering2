@@ -26,7 +26,12 @@
     </style>
 </head>
     <body>
+        {% include "navbar.html" %}
+        
         <h1>Fuel Price Tracker</h1>
+        
         {% block content %}{% endblock %}
+        
+        {% include "footer.html" %}
     </body>
 </html>
