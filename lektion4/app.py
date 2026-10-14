@@ -22,7 +22,7 @@ def api():
         response = requests.get(url, timeout=10)
         print(response.status_code)
         data = response.json()
-        print(data[0])
+        print(data[0]["SEK_per_kWh"])
         print(response.status_code)
         return jsonify(
             {"year": year, "month": month, "day": day, "price_class": price_class}
