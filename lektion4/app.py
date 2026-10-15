@@ -21,7 +21,6 @@ def index():
 def api():
     # Kontrollerar om användaren har skickat formuläret
     if request.method == "POST":
-
         # Hämtar användarens val från formuläret
         year = request.form.get("year")
         month = request.form.get("month")
