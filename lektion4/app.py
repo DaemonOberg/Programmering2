@@ -1,3 +1,4 @@
+import pandas as pd
 import requests
 from flask import Flask, jsonify, render_template, request
 
@@ -20,11 +21,10 @@ def api():
         url = f"https://www.elprisetjustnu.se/api/v1/prices/{year}/{month}-{day}_{price_class}.json"
         print(url)
         response = requests.get(url, timeout=10)
-        print(response.status_code)
         data = response.json()
-        print(data[0]["SEK_per_kWh"])
-        print(response.status_code)
-        return jsonify(
-            {"year": year, "month": month, "day": day, "price_class": price_class}
+        df = pd.DataFrame(data)
+        html_table = df.to_html(
+            classes="table table-striped table-bordered text-start", index=False
         )
+        return render_template("prices.html", table=html_table)
     return jsonify({"message": "Mitt API fungerar!"})

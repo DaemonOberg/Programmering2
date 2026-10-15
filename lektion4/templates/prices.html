@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block content %}
+<style>
+    table th {
+        text-align: left !important;
+    }
+</style>
+
+{{ table | safe }}
+
+{% endblock %}
