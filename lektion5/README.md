@@ -162,13 +162,13 @@ Jag har testat följande:
 För att testa timeout ändrade jag tillfälligt:
 
 ```python
-timeout=5
+timeout = 5
 ```
 
 till:
 
 ```python
-timeout=0.003
+timeout = 0.003
 ```
 
 Det gjorde att programmet fick för kort tid att vänta på servern.
