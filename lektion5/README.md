@@ -1,3 +1,4 @@
+
 # Lektion 5 – API-klient med Python
 
 ## Uppgift 1 – Enskild uppgift
@@ -35,7 +36,7 @@ response = requests.get(url, timeout=5)
 ```
 
 - `requests.get()` skickar en förfrågan till servern.
-- `timeout=5` gör att programmet inte väntar obegränsat på servern.
+- `timeout=5` gör att programmet väntar högst 5 sekunder på serverns svar.
 - `response` sparar serverns svar.
 
 ## 2. Kontrollera HTTP-status
@@ -87,12 +88,12 @@ Det beror på att API:et visar ett elpris var 15:e minut.
 ## 5. Spara informationen som CSV
 
 ```python
-df.to_csv("lektion5/uppgift1/priser.csv", index=False)
+df.to_csv("lektion5/priser.csv", index=False)
 ```
 
 Den här raden sparar tabellen i en CSV-fil.
 
-- `lektion5/uppgift1/priser.csv` anger var filen ska sparas när programmet körs från projektets huvudmapp.
+- `lektion5/priser.csv` anger var filen ska sparas när programmet körs från projektets huvudmapp `Programmering2`.
 - `index=False` gör att Pandas inte sparar radnumren som en extra kolumn.
 
 Jag använder också:
@@ -212,18 +213,19 @@ Det visade att `except ValueError` fungerade.
 
 ```text
 lektion5/
-└── uppgift1/
-    ├── klient.py
-    ├── priser.csv
-    └── README.md
+├── klient.py
+├── priser.csv
+└── README.md
 ```
+
+Alla filer ligger direkt i mappen `lektion5`.
 
 ## 9. Köra programmet
 
 Från huvudmappen `Programmering2` kör jag:
 
 ```powershell
-python lektion5/uppgift1/klient.py
+python lektion5/klient.py
 ```
 
 Programmet:
@@ -232,7 +234,7 @@ Programmet:
 2. Kontrollerar HTTP-statusen.
 3. Läser JSON-informationen.
 4. Skapar en DataFrame med Pandas.
-5. Sparar informationen i `priser.csv`.
+5. Sparar informationen i `lektion5/priser.csv`.
 6. Skriver ut tabellen i terminalen.
 
 Om något går fel visas ett felmeddelande.

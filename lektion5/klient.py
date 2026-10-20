@@ -7,7 +7,7 @@ try:
     response.raise_for_status()
     data = response.json()
     df = pd.DataFrame(data)
-    df.to_csv("lektion5/uppgift1/priser.csv", index=False)
+    df.to_csv("lektion5/priser.csv", index=False)
     print(df)
 except requests.HTTPError:
     print("Ett HTTP-fel uppstod")
